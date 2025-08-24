@@ -1,0 +1,24 @@
+// Global usings for Blogsphere.Search.Api namespaces
+global using Blogsphere.Search.Api;
+global using Blogsphere.Search.Api.Configurations;
+global using Blogsphere.Search.Api.Data;
+global using Blogsphere.Search.Api.Data.Interfaces;
+global using Blogsphere.Search.Api.DI;
+global using Blogsphere.Search.Api.Entities.ApiGateway;
+global using Blogsphere.Search.Api.Entities.Storage;
+global using Blogsphere.Search.Api.EventBus;
+global using Blogsphere.Search.Api.EventBus.ApiGateway.Consumers;
+global using Blogsphere.Search.Api.Extensions;
+global using Blogsphere.Search.Api.Middlewares;
+global using Blogsphere.Search.Api.Models.Constants;
+global using Blogsphere.Search.Api.Models.Contracts;
+global using Blogsphere.Search.Api.Models.Contracts.ApiGateway;
+global using Blogsphere.Search.Api.Models.Core;
+global using Blogsphere.Search.Api.Models.Enums;
+global using Blogsphere.Search.Api.Providers;
+global using Blogsphere.Search.Api.Services.EventRecording;
+global using Blogsphere.Search.Api.Services.Factory;
+global using Blogsphere.Search.Api.Services.Interfaces;
+global using Blogsphere.Search.Api.Services.Pagination;
+global using Blogsphere.Search.Api.Services.Search;
+global using Blogsphere.Search.Api.Swagger;

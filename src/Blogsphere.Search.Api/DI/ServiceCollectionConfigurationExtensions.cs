@@ -1,5 +1,3 @@
-using Blogsphere.Search.Api.Configurations;
-
 namespace Blogsphere.Search.Api.DI;
 
 public static class ServiceCollectionConfigurationExtensions

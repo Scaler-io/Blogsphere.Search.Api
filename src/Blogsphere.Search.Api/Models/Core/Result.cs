@@ -1,5 +1,3 @@
-using Blogsphere.Search.Api.Models.Enums;
-
 namespace Blogsphere.Search.Api.Models.Core;
 
 public class Result<T>

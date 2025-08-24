@@ -1,6 +1,3 @@
-using Blogsphere.Search.Api.Models.Constants;
-using Blogsphere.Search.Api.Models.Enums;
-
 namespace Blogsphere.Search.Api.Models.Core;
 
 public class ApiResponse

@@ -1,8 +1,5 @@
 
 using System.Net.Mime;
-using Blogsphere.Search.Api.Extensions;
-using Blogsphere.Search.Api.Models.Core;
-using Blogsphere.Search.Api.Models.Enums;
 using Newtonsoft.Json;
 
 namespace Blogsphere.Search.Api.Middlewares;

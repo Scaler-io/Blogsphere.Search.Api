@@ -1,4 +1,3 @@
-using Blogsphere.Search.Api.Extensions;
 using Serilog.Context;
 
 namespace Blogsphere.Search.Api.Middlewares;

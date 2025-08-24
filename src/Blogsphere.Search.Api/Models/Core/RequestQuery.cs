@@ -11,8 +11,8 @@ public class RequestQuery
     public Dictionary<string, string> Filters { get; set; }
     public string MatchPhrase { get; set; }
     public string MatchPhraseField { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
+    public DateTime? StartTime { get; set; }
+    public DateTime? EndTime { get; set; }
     public string TimeField {  get; set; }
 
     public bool IsFilteredQuery { get; set; } = false;

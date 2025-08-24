@@ -1,6 +1,6 @@
 using Asp.Versioning.ApiExplorer;
-using Blogsphere.Search.Api.Models.Constants;
 using Microsoft.OpenApi.Models;
+using Scalar.AspNetCore;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -59,7 +59,7 @@ public class SwaggerConfiguration
         }
 
         options.DocumentFilter<SwaggerBasePath>();
-        options.DocumentFilter<SwaggerRemoveVersionFromRoute>();
+        // options.DocumentFilter<SwaggerRemoveVersionFromRoute>();
         options.UseInlineDefinitionsForEnums();
         options.ExampleFilters();
         options.OperationFilter<SwaggerHeaderFilter>();
@@ -79,5 +79,16 @@ public class SwaggerConfiguration
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
             $"Blogsphere Search API - {description.GroupName.ToUpperInvariant()}");
         }
+    }
+
+    public static void SetupScalarUiOptions(ScalarOptions options, ApiVersionDescription description)
+    {
+        options.WithOpenApiRoutePattern($"swagger/{description.GroupName}/swagger.json")
+        .WithTitle($"Blogsphere Search API - {description.GroupName.ToUpperInvariant()}")
+        .WithDarkModeToggle()
+        .WithTheme(ScalarTheme.Default)
+        .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.Http)
+        .WithDefaultFonts()
+        .WithLayout(ScalarLayout.Modern);
     }
 }

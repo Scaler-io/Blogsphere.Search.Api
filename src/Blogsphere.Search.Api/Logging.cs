@@ -1,4 +1,3 @@
-using Blogsphere.Search.Api.Configurations;
 using Destructurama;
 using Serilog;
 using Serilog.Events;

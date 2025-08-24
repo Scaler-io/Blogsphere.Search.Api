@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Blogsphere.Search.Api.Extensions;
 using Microsoft.AspNetCore.Http.Extensions;
 using Serilog.Context;
 

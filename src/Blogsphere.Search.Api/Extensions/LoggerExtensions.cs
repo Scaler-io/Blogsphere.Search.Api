@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-using Blogsphere.Search.Api.Models.Constants;
 
 namespace Blogsphere.Search.Api.Extensions;
 

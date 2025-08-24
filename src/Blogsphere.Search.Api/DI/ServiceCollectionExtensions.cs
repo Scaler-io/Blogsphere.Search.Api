@@ -1,10 +1,5 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
-using Blogsphere.Search.Api.Configurations;
-using Blogsphere.Search.Api.Middlewares;
-using Blogsphere.Search.Api.Models.Core;
-using Blogsphere.Search.Api.Models.Enums;
-using Blogsphere.Search.Api.Swagger;
 using FluentValidation.AspNetCore;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
@@ -44,10 +39,9 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
         services.AddApiVersioning(options => 
         {
-            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.DefaultApiVersion = ApiVersion.Default;
             options.ReportApiVersions = true;
             options.AssumeDefaultVersionWhenUnspecified = true;
-            options.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
         }).AddApiExplorer(options => 
         {
             options.GroupNameFormat = "'v'VVV";
@@ -61,10 +55,11 @@ public static class ServiceCollectionExtensions
         var swaggerConfiguration = new SwaggerConfiguration(apiName, apiDescription, apiHost, isDevelopment);
 
         services.AddSwaggerExamplesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
-        .AddSwaggerExamples();
+            .AddSwaggerExamples();
 
         services.AddSwaggerGen(options => 
         {
+            // Configure basic swagger options without the provider
             var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
             swaggerConfiguration.SetupSwaggerGenOptions(options, provider);
         });
@@ -73,7 +68,7 @@ public static class ServiceCollectionExtensions
         services.AddHealthChecks();
         services.AddHealthChecksUI(options => 
         {
-            options.AddHealthCheckEndpoint("Blogsphere Search API Health", "/health");
+            options.AddHealthCheckEndpoint("Blogsphere Search API Health", "/healthcheck");
         }).AddInMemoryStorage();
 
         // Middleware
@@ -106,7 +101,7 @@ public static class ServiceCollectionExtensions
         {
             config.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
             // add consumer
-
+            config.AddConsumersFromNamespaceContaining<ApiClusterCreatedConsumer>();
             config.UsingRabbitMq((context, cfg) => 
             {
                 var eventBus = configuration.GetSection(EventBusOption.OptionName).Get<EventBusOption>();
@@ -139,6 +134,11 @@ public static class ServiceCollectionExtensions
         {
             options.InvalidModelStateResponseFactory = HandleFrameworkValidationFailure();
         });
+
+        services.AddScoped<ISearchServiceFactory, SearchServiceFactory>();
+        services.AddScoped(typeof(ISearchService<>), typeof(SearchService<>));
+        services.AddScoped(typeof(IPaginatedSearchService<>), typeof(PaginatedSearchService<>));
+        services.AddScoped<IEventRecorderService, EventRecorderService>();
 
         return services;
     }
