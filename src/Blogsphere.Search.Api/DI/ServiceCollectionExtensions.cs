@@ -65,10 +65,11 @@ public static class ServiceCollectionExtensions
         });
 
         // Healthcheck
+        var healthcheckUrl = configuration["HealthcheckUrl"];   
         services.AddHealthChecks();
         services.AddHealthChecksUI(options => 
         {
-            options.AddHealthCheckEndpoint("Blogsphere Search API Health", "/healthcheck");
+            options.AddHealthCheckEndpoint("Blogsphere Search API Health", healthcheckUrl);
         }).AddInMemoryStorage();
 
         // Middleware

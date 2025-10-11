@@ -7,11 +7,19 @@ public class GenericEventMapper : Profile
 {
     public GenericEventMapper()
     {
-        CreateMap<ApiClusterCreated, ApiClusterSummary>();
-        CreateMap<ApiClusterUpdated, ApiClusterSummary>();
+        CreateMap<ApiClusterCreated, ApiClusterSummary>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.LastUpdatedAt));
+        CreateMap<ApiClusterUpdated, ApiClusterSummary>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.LastUpdatedAt));
         CreateMap<ApiClusterDeleted, ApiClusterSummary>();
-        CreateMap<ApiRouteCreated, ApiRouteSummary>();
-        CreateMap<ApiRouteUpdated, ApiRouteSummary>();
+        CreateMap<ApiRouteCreated, ApiRouteSummary>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.LastUpdatedAt));
+        CreateMap<ApiRouteUpdated, ApiRouteSummary>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.LastUpdatedAt));
         CreateMap<ApiRouteDeleted, ApiRouteSummary>();
     }
 }

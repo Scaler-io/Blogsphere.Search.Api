@@ -10,7 +10,7 @@ namespace Blogsphere.Search.Api.Controllers.v1;
 public class RequestSearchController(ILogger logger, ISearchServiceFactory factory) : ApiBaseController(logger, factory)
 {
 
-    [HttpPost("search/{indexName}")]
+    [HttpPost("{indexName}")]
     [SwaggerHeader("CorrelationId", Description = "Unique identifier for tracing the request through the system")]
     [SwaggerOperation(OperationId = "Search", Summary = "Search document", Description = "Search for data in the specified index")]
     public async Task<IActionResult> Search([FromBody] RequestQuery query, [FromRoute] string indexName)

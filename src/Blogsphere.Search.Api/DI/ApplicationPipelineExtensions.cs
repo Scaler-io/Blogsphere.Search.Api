@@ -22,7 +22,7 @@ public static class ApplicationPipelineExtensions
             }
         });
 
-        app.UseCors("CorsPolicy");
+        // app.UseHttpsRedirection();
 
         app.UseMiddleware<CorrelationHeaderEnricher>();
         app.UseMiddleware<RequestLoggerMiddleware>();
@@ -42,6 +42,8 @@ public static class ApplicationPipelineExtensions
         app.UseAuthorization();
         
         app.MapControllers();
+
+        app.UseCors("CorsPolicy");
 
         return app;
     }

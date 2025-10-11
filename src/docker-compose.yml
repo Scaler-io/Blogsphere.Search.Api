@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  blogsphere.search.api:
+    image: ${DOCKER_REGISTRY-}blogsphere.search.api
+    build:
+      context: .
+      dockerfile: Blogsphere.Search.Api/Dockerfile
+
+networks:
+  blogsphere_dev_net:
+    external: true
