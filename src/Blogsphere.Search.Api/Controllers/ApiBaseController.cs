@@ -1,3 +1,4 @@
+using Blogsphere.Search.Api.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blogsphere.Search.Api.Controllers;
@@ -50,6 +51,8 @@ public class ApiBaseController(ILogger logger, ISearchServiceFactory factory) : 
             return await ExecuteCountAsync<ApiClusterSummary>(indexName, query);
         if (indexName.IsApiRouteIndex())
             return await ExecuteCountAsync<ApiRouteSummary>(indexName, query);
+        if (indexName.IsManagementUserIndex())
+            return await ExecuteCountAsync<ManagementUserSummary>(indexName, query);
 
         return Result<long>.Failure(Models.Enums.ErrorCodes.BadRequest, "Invalid index name provided");
     }

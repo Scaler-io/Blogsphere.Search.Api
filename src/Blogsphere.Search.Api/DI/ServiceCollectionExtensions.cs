@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Blogsphere.Search.Api.EventBus.User.ManagementUser.Consumers;
 using FluentValidation.AspNetCore;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
@@ -101,11 +102,11 @@ public static class ServiceCollectionExtensions
         services.AddMassTransit(config => 
         {
             config.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
-            // add consumer
-            config.AddConsumersFromNamespaceContaining<ApiClusterCreatedConsumer>();
+            config.AddConsumersFromNamespaceContaining<ApiClusterCreatedConsumer>();          
+            config.AddConsumersFromNamespaceContaining<ManagementUserCreatedConsumer>();      
             config.UsingRabbitMq((context, cfg) => 
             {
-                var eventBus = configuration.GetSection(EventBusOption.OptionName).Get<EventBusOption>();
+                var eventBus = configuration.GetSection(EventBusOption.OptionName).Get<EventBusOption>();             
                 cfg.Host(eventBus.Host, eventBus.VirtualHost, host => 
                 {
                     host.Username(eventBus.Username);
@@ -125,9 +126,10 @@ public static class ServiceCollectionExtensions
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddMassTransitInstrumentation()
-                .AddZipkinExporter(options => 
+                .AddJaegerExporter(options => 
                 {
-                    options.Endpoint = new Uri(configuration["Zipkin:Url"]);
+                    options.AgentHost = configuration["Jaeger:Host"];
+                    options.AgentPort = int.Parse(configuration["Jaeger:Port"]);
                 });
             });
 

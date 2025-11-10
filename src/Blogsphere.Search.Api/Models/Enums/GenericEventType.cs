@@ -7,5 +7,9 @@ public enum GenericEventType
     ApiClusterDeleted,
     ApiRouteCreated,
     ApiRouteUpdated,
-    ApiRouteDeleted
+    ApiRouteDeleted,
+
+    ManagementUserCreated,
+    ManagementUserUpdated,
+    ManagementUserDeleted
 }

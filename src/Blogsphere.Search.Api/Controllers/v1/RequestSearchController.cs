@@ -1,5 +1,6 @@
 
 using Asp.Versioning;
+using Blogsphere.Search.Api.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Nest;
 using Swashbuckle.AspNetCore.Annotations;
@@ -20,6 +21,7 @@ public class RequestSearchController(ILogger logger, ISearchServiceFactory facto
         {
             var name when name.IsApiClusterIndex() => await HandleSearchSummary<ApiClusterSummary>(query, indexName),
             var name when name.IsApiRouteIndex() => await HandleSearchSummary<ApiRouteSummary>(query, indexName),
+            var name when name.IsManagementUserIndex() => await HandleSearchSummary<ManagementUserSummary>(query, indexName),
             _ => BadRequest(new ApiValidationResponse("Index invalid name provided"))
         };
 

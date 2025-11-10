@@ -4,4 +4,5 @@ public class ApiProviderNames
 {
     public const string IdentityApi = "IdentityApi";
     public const string ApiGateway = "ApiGateway";
+    public const string UserApi = "UserApi";
 }

@@ -1,3 +1,4 @@
+using Blogsphere.Search.Api.Entities.User;
 using Microsoft.Extensions.Options;
 using Nest;
 
@@ -70,12 +71,23 @@ public class SearchServiceBase : QueryBuilderBaseService
             [typeof(ApiClusterSummary)] = descriptor => descriptor.Properties<ApiClusterSummary>(p => p
                 .Text(k => k.Name(n => n.ClusterId).Analyzer("ngram_analyzer"))
                 .Keyword(k => k.Name(n => n.LoadBalancerName))
+                .Keyword(k => k.Name(n => n.Status))
             ),
             [typeof(ApiRouteSummary)] = descriptor => descriptor.Properties<ApiRouteSummary>(p => p
                 .Text(k => k.Name(n => n.RouteId).Analyzer("ngram_analyzer"))
                 .Text(k => k.Name(n => n.Path).Analyzer("ngram_analyzer"))
                 .Keyword(k => k.Name(n => n.Cluster))
                 .Keyword(k => k.Name(n => n.RateLimitterPolicy))
+                .Keyword(k => k.Name(n => n.Status))
+            ),
+            [typeof(ManagementUserSummary)] = descriptor => descriptor.Properties<ManagementUserSummary>(p => p
+                .Keyword(k => k.Name(n => n.EmployeeId))
+                .Text(k => k.Name(n => n.FullName).Analyzer("ngram_analyzer"))
+                .Text(k => k.Name(n => n.Email).Analyzer("ngram_analyzer"))
+                .Keyword(k => k.Name(n => n.Department))
+                .Keyword(k => k.Name(n => n.JobTitle))
+                .Keyword(k => k.Name(n => n.Roles))
+                .Keyword(k => k.Name(n => n.Status))
             )
         };
 

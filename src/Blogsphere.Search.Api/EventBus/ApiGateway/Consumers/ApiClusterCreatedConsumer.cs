@@ -2,7 +2,7 @@ using AutoMapper;
 using Contracts.Events;
 using MassTransit;
 using Microsoft.Extensions.Options;
-
+ 
 namespace Blogsphere.Search.Api.EventBus.ApiGateway.Consumers;
 
 public class ApiClusterCreatedConsumer(

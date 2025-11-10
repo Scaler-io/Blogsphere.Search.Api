@@ -44,6 +44,12 @@ public class IdentityServiceProvider(IHttpClientFactory httpClientFactory, IConf
                 ClientId = providerConfigurationOption.ApiGatewaySettings.ClientId,
                 ClientSecret = providerConfigurationOption.ApiGatewaySettings.ClientSecret,
             },
+            "UserApi" => new()
+            {
+                Address = discoveryDocument.TokenEndpoint,
+                ClientId = providerConfigurationOption.UserApiSettings.ClientId,
+                ClientSecret = providerConfigurationOption.UserApiSettings.ClientSecret,
+            },
             _ => throw new ArgumentException($"Invalid client name: {requestedClientName}")
         };
     }

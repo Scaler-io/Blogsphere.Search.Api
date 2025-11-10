@@ -1,16 +1,23 @@
+using Blogsphere.Search.Api.Models.Contracts.User.ManagementUser;
 using Elasticsearch.Net;
+using AutoMapper;
 using Microsoft.Extensions.Options;
 using Nest;
+using Blogsphere.Search.Api.Entities.User;
 
 namespace Blogsphere.Search.Api.Services.Search;
 
 public class SearchService<TDocument>(
     ILogger logger,
     IOptions<ElasticSearchOption> elasticSearchOption,
-    ApiGatewayProvider apiGatewayProvider) 
+    ApiGatewayProvider apiGatewayProvider,
+    UserApiProvider userApiProvider,
+    IMapper mapper) 
 : SearchServiceBase(logger, elasticSearchOption), ISearchService<TDocument> where TDocument : class
 {
     private readonly ApiGatewayProvider _apiGatewayProvider = apiGatewayProvider;
+    private readonly UserApiProvider _userApiProvider = userApiProvider;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<Result<bool>> SeedDocumentAsync(TDocument document, string id, string index)
     {
@@ -127,6 +134,10 @@ public class SearchService<TDocument>(
                 var apiRouteSummaries = await GetApiRouteAsync();
                 bulkResponse = await ElasticSearchClient.BulkAsync(b => b.Index(index).IndexMany(apiRouteSummaries.Items));
                 break;
+            case "managementuser-search-index":
+                var managementUserSummaries = _mapper.Map<List<ManagementUserSummary>>((await GetManagementUserAsync()).Items);
+                bulkResponse = await ElasticSearchClient.BulkAsync(b => b.Index(index).IndexMany(managementUserSummaries));
+                break;
             default:
                 break;
         }
@@ -150,6 +161,12 @@ public class SearchService<TDocument>(
     private async Task<PaginatedResponse<ApiRoute>> GetApiRouteAsync()
     {
         var results = await _apiGatewayProvider.GetApiRoutesAsync();
+        return results.Data;
+    }
+
+    private async Task<PaginatedResponse<ManagementUser>> GetManagementUserAsync()
+    {
+        var results = await _userApiProvider.GetManagementUsersAsync();
         return results.Data;
     }
 }

@@ -20,6 +20,7 @@ services:
       - ElasticSearch__Uri=http://elasticsearch:9200
       - ElasticSearch__ApiClusterIndex=apicluster-search-index
       - ElasticSearch__ApiRouteIndex=apiroute-search-index
+      - ElasticSearch__ManagementUserIndex=managementuser-search-index
       - IdentityGroupAccess__Authority=http://host.docker.internal:5000
       - IdentityGroupAccess__Audience=blogsphere.search.api
       - EventBus__Host=rabbitmq
@@ -32,6 +33,12 @@ services:
       - ProviderSettings__ApiGatewaySettings__BaseUrl=http://host.docker.internal:8000
       - ProviderSettings__ApiGatewaySettings__ClientId=blogshere.apigateway.api
       - ProviderSettings__ApiGatewaySettings__ClientSecret=apigateway-secret-key-2024
+      - ProviderSettings__UserApiSettings__BaseUrl=http://host.docker.internal:8000/user/
+      - ProviderSettings__UserApiSettings__ClientId=blogshere.user.api
+      - ProviderSettings__UserApiSettings__ClientSecret=user-secret-key-2024
+      - ProviderSettings__UserApiSettings__SubscriptionKey=efc2253f-6d87-40bb-9623-88c0e2bbaa4b
+      - Jaeger__Host=localhost
+      - Jaeger__Port=6831
     ports:
       - "8002:8080"
     networks:

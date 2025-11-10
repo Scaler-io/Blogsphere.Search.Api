@@ -4,6 +4,7 @@ public class ProviderConfigurationOption
 {
     public const string OptionName = "ProviderSettings";
     public ApiGatewaySettings ApiGatewaySettings { get; set; }
+    public UserApiSettings UserApiSettings { get; set; }
 }
 
 public class ApiSettings
@@ -15,3 +16,4 @@ public class ApiSettings
 }
 
 public class ApiGatewaySettings : ApiSettings {}
+public class UserApiSettings : ApiSettings {}
