@@ -31,10 +31,10 @@ services:
       - "ConnectionStrings__BlogsphereStorageConnection=DefaultEndpointsProtocol=http;AccountName=blogspherestrg;AccountKey=123e4567e89b12d3a456426614174000;BlobEndpoint=http://host.docker.internal:10000/blogspherestrg;QueueEndpoint=http://host.docker.internal:10001/blogspherestrg;TableEndpoint=http://host.docker.internal:10002/blogspherestrg;"
       - Zipkin__Url=http://zipkin:9411/api/v2/spans
       - ProviderSettings__ApiGatewaySettings__BaseUrl=http://host.docker.internal:8000
-      - ProviderSettings__ApiGatewaySettings__ClientId=blogshere.apigateway.api
+      - ProviderSettings__ApiGatewaySettings__ClientId=blogsphere.apigateway.api
       - ProviderSettings__ApiGatewaySettings__ClientSecret=apigateway-secret-key-2024
       - ProviderSettings__UserApiSettings__BaseUrl=http://host.docker.internal:8000/user/
-      - ProviderSettings__UserApiSettings__ClientId=blogshere.user.api
+      - ProviderSettings__UserApiSettings__ClientId=blogsphere.user.api
       - ProviderSettings__UserApiSettings__ClientSecret=user-secret-key-2024
       - ProviderSettings__UserApiSettings__SubscriptionKey=efc2253f-6d87-40bb-9623-88c0e2bbaa4b
       - Jaeger__Host=localhost
