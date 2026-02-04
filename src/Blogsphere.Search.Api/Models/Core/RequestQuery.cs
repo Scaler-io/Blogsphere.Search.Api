@@ -13,7 +13,8 @@ public class RequestQuery
     public string MatchPhraseField { get; set; }
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
-    public string TimeField {  get; set; }
+    public string TimeField { get; set; }
+    public SearchType SearchType { get; set; } = SearchType.Paginated;
 
     public bool IsFilteredQuery { get; set; } = false;
 

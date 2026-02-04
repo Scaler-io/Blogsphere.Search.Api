@@ -48,7 +48,7 @@ public class SearchServiceBase : QueryBuilderBaseService
             .Map<TDocument>(m => CreateMapping(m))
         );
 
-        if(!createIndexResponse.IsValid)
+        if (!createIndexResponse.IsValid)
         {
             _logger.Here().Error("Failed to create index {index} with error {error}", index, createIndexResponse.DebugInformation);
             return false;
@@ -62,6 +62,17 @@ public class SearchServiceBase : QueryBuilderBaseService
         _logger.Here().Information("No index found with name {index}", index);
         var indexResponse = await ElasticSearchClient.Indices.ExistsAsync(index);
         return indexResponse.Exists;
+    }
+
+    protected Func<SortDescriptor<TDoc>, IPromise<IList<ISort>>> BuildSortDescriptor<TDoc>(string sortField, string sortOrder) where TDoc : class
+    {
+        return sort => sort
+            .Field(sortField,
+                sortOrder == "Asc"
+                    ? SortOrder.Ascending
+                    : SortOrder.Descending)
+            // mandatory tie-breaker
+            .Field("_id", SortOrder.Ascending);
     }
 
     private static ITypeMapping CreateMapping<TDocument>(TypeMappingDescriptor<TDocument> m) where TDocument : class
