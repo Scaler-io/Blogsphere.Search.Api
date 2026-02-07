@@ -14,7 +14,7 @@ public class IdentityServiceProvider(IHttpClientFactory httpClientFactory, IConf
         var identityGroupAccess = _configuration["IdentityGroupAccess:Authority"];
         var discoveryDocument = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest{
             Address = identityGroupAccess,
-            Policy = new DiscoveryPolicy { RequireHttps = false, ValidateIssuerName = true, ValidateEndpoints = true }
+            Policy = new DiscoveryPolicy { RequireHttps = false, ValidateIssuerName = false, ValidateEndpoints = true }
         });
 
         if(discoveryDocument.IsError)
