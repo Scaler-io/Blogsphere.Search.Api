@@ -77,4 +77,25 @@ public class SearchSeedController(
         Logger.Here().MethodExited();
         return OkOrFailure(result);
     }
+
+    [HttpPost("seed/app-users")]
+    [SwaggerHeader("CorrelationId", Description = "Unique identifier for tracing the request through the system")]
+    [SwaggerOperation(Summary = "Seed App Users", Description = "Performs re-index and seeds App Users ")]
+    // 200
+    [SwaggerResponse(StatusCodes.Status200OK, "Success", typeof(bool))]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    // 400
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request", typeof(ApiValidationResponse   ))]
+    [ProducesResponseType(typeof(ApiValidationResponse), StatusCodes.Status400BadRequest)]
+    // 500
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(ApiExceptionResponse))]
+    [ProducesResponseType(typeof(ApiExceptionResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> SeedAppUsers()
+    {
+        Logger.Here().MethodEntered();
+        var searchService = Factory.Create<AppUserSummary>();
+        var result = await searchService.SearchReIndex(_elasticSearchOption.AppUserIndex);
+        Logger.Here().MethodExited();
+        return OkOrFailure(result);
+    }
 }

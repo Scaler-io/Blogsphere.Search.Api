@@ -22,6 +22,7 @@ public class RequestSearchController(ILogger logger, ISearchServiceFactory facto
             var name when name.IsApiClusterIndex() => await HandleSearchSummary<ApiClusterSummary>(query, indexName),
             var name when name.IsApiRouteIndex() => await HandleSearchSummary<ApiRouteSummary>(query, indexName),
             var name when name.IsManagementUserIndex() => await HandleSearchSummary<ManagementUserSummary>(query, indexName),
+            var name when name.IsAppUserIndex() => await HandleSearchSummary<AppUserSummary>(query, indexName),
             _ => BadRequest(new ApiValidationResponse("Index invalid name provided"))
         };
 
