@@ -21,6 +21,7 @@ services:
       - ElasticSearch__ApiClusterIndex=apicluster-search-index
       - ElasticSearch__ApiRouteIndex=apiroute-search-index
       - ElasticSearch__ManagementUserIndex=managementuser-search-index
+      - ElasticSearch__AppUserIndex=appuser-search-index
       - IdentityGroupAccess__Authority=http://host.docker.internal:5000
       - IdentityGroupAccess__Audience=blogsphere.search.api
       - EventBus__Host=rabbitmq
@@ -32,11 +33,11 @@ services:
       - Zipkin__Url=http://zipkin:9411/api/v2/spans
       - ProviderSettings__ApiGatewaySettings__BaseUrl=http://host.docker.internal:8000
       - ProviderSettings__ApiGatewaySettings__ClientId=blogsphere.apigateway.api
-      - ProviderSettings__ApiGatewaySettings__ClientSecret=apigateway-secret-key-2024
+      - ProviderSettings__ApiGatewaySettings__ClientSecret=${API_GATEWAY_CLIENT_SECRET}
       - ProviderSettings__UserApiSettings__BaseUrl=http://host.docker.internal:8000/user/
-      - ProviderSettings__UserApiSettings__ClientId=blogsphere.user.api
-      - ProviderSettings__UserApiSettings__ClientSecret=user-secret-key-2024
-      - ProviderSettings__UserApiSettings__SubscriptionKey=efc2253f-6d87-40bb-9623-88c0e2bbaa4b
+      - ProviderSettings__UserApiSettings__ClientId=blogshere.user.api
+      - ProviderSettings__UserApiSettings__ClientSecret=${USER_API_CLIENT_SECRET}
+      - ProviderSettings__UserApiSettings__SubscriptionKey=${USER_API_SUBSCRIPTION_KEY}
       - Jaeger__Host=localhost
       - Jaeger__Port=6831
     ports:

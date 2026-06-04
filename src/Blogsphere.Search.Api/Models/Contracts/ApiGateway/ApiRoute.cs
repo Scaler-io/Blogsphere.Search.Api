@@ -5,7 +5,7 @@ public class ApiRoute
     public string Id { get; set; }
     public string RouteId { get; set; }
     public string Path { get; set; }
-    public string ClusterId { get; set; }
+    public string Cluster { get; set; }
     public string RateLimitterPolicy { get; set; }
     public long TransformCount { get; set; }
     public string Status { get; set; }

@@ -99,6 +99,13 @@ public class SearchServiceBase : QueryBuilderBaseService
                 .Keyword(k => k.Name(n => n.JobTitle))
                 .Keyword(k => k.Name(n => n.Roles))
                 .Keyword(k => k.Name(n => n.Status))
+            ),
+            [typeof(AppUserSummary)] = descriptor => descriptor.Properties<AppUserSummary>(p => p
+                .Keyword(k => k.Name(n => n.Id))
+                .Text(k => k.Name(n => n.Name).Analyzer("ngram_analyzer"))
+                .Text(k => k.Name(n => n.Email).Analyzer("ngram_analyzer"))
+                .Keyword(k => k.Name(n => n.Roles))
+                .Keyword(k => k.Name(n => n.Status))
             )
         };
 

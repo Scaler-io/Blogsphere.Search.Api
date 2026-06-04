@@ -1,5 +1,6 @@
 using AutoMapper;
 using Blogsphere.Search.Api.Entities.User;
+using Blogsphere.Search.Api.Models.Contracts.User.AppUser;
 using Blogsphere.Search.Api.Models.Contracts.User.ManagementUser;
 using Contracts.Events;
 
@@ -30,6 +31,16 @@ public class GenericEventMapper : Profile
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
             .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.LastUpdatedAt));
         CreateMap<ManagementUser, ManagementUserSummary>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.Metadata.CreatedAt, DateTimeKind.Utc)))
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.Metadata.UpdatedAt, DateTimeKind.Utc)))
+            .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Roles.Select(r => r.Name).ToList()))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.IsActive ? "Active" : "Inactive"));
+
+        // App User
+        CreateMap<AppUser, AppUserSummary>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.Metadata.CreatedAt, DateTimeKind.Utc)))
             .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.Metadata.UpdatedAt, DateTimeKind.Utc)))
             .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Roles.Select(r => r.Name).ToList()))

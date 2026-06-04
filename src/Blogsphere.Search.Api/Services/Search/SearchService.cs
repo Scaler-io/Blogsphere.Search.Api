@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.Extensions.Options;
 using Nest;
 using Blogsphere.Search.Api.Entities.User;
+using Blogsphere.Search.Api.Models.Contracts.User.AppUser;
 
 namespace Blogsphere.Search.Api.Services.Search;
 
@@ -138,6 +139,10 @@ public class SearchService<TDocument>(
                 var managementUserSummaries = _mapper.Map<List<ManagementUserSummary>>((await GetManagementUserAsync()).Items);
                 bulkResponse = await ElasticSearchClient.BulkAsync(b => b.Index(index).IndexMany(managementUserSummaries));
                 break;
+            case "appuser-search-index":
+                var appUserSummaries = _mapper.Map<List<AppUserSummary>>((await GetAppUserAsync()).Items);
+                bulkResponse = await ElasticSearchClient.BulkAsync(b => b.Index(index).IndexMany(appUserSummaries));
+                break;
             default:
                 break;
         }
@@ -167,6 +172,12 @@ public class SearchService<TDocument>(
     private async Task<PaginatedResponse<ManagementUser>> GetManagementUserAsync()
     {
         var results = await _userApiProvider.GetManagementUsersAsync();
+        return results.Data;
+    }
+
+    private async Task<PaginatedResponse<AppUser>> GetAppUserAsync()
+    {
+        var results = await _userApiProvider.GetAppUsersAsync();
         return results.Data;
     }
 }
